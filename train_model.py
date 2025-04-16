@@ -4,6 +4,8 @@ from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import PCA
 from sklearn.linear_model import LogisticRegression
+from imblearn.over_sampling import SMOTE
+from imblearn.pipeline import Pipeline as ImbPipeline  # Use ImbPipeline for SMOTE
 import joblib
 
 from custom_transformers import DenseTransformer  # ✅ Import it here
@@ -17,10 +19,11 @@ y = df["case_outcome"]
 # Split data
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Pipeline with PCA
-pipeline = Pipeline([
+# Pipeline with PCA and SMOTE
+pipeline = ImbPipeline([
     ('tfidf', TfidfVectorizer(max_features=5000)),
     ('dense', DenseTransformer()),
+    ('smote', SMOTE(sampling_strategy='auto', random_state=42)),  # Applying SMOTE
     ('pca', PCA(n_components=100)),
     ('clf', LogisticRegression(max_iter=1000))
 ])
@@ -29,5 +32,5 @@ pipeline = Pipeline([
 pipeline.fit(X_train, y_train)
 
 # Save model
-joblib.dump(pipeline, "legal_classifier.pkl")
-print("Model saved to legal_classifier.pkl with PCA")
+joblib.dump(pipeline, "legal_classifier_smote.pkl")
+print("Model saved to legal_classifier_smote.pkl with SMOTE applied")
