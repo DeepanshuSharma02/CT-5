@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from custom_transformers import DenseTransformer 
 
 # Load model
-model = joblib.load("legal_classifier.pkl")
+model = joblib.load("legal_classifier_smote.pkl")
 
 # FastAPI app
 app = FastAPI()
