@@ -1,5 +1,6 @@
-fastapi
-uvicorn
-scikit-learn
 pandas
+scikit-learn
 joblib
+imblearn
+uvicorn
+fastapi
