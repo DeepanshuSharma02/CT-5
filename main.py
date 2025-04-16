@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
 from fastapi.middleware.cors import CORSMiddleware
+from custom_transformers import DenseTransformer 
 
 # Load model
 model = joblib.load("legal_classifier.pkl")
